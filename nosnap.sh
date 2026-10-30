@@ -1,43 +1,27 @@
 #!/bin/sh
-echo 'Adding Mozillateam PPA...'
-sudo add-apt-repository ppa:mozillateam/ppa -y
-echo 'Adding Mozilla Firefox Official Repo...'
+echo 'Removing ALL snaps'
+sudo snap remove $(snap list | awk '!/^Name|^core|^snapd/ {print $1}') 2>/dev/null || true
+echo 'Adding Mozilla Firefox and Thunderbird Official Repo...'
+sudo apt install wget -y
+wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null
 sudo tee /etc/apt/sources.list.d/mozilla.sources > /dev/null << EOF
 Types: deb
 URIs: https://packages.mozilla.org/apt
 Suites: mozilla
 Components: main
 Signed-By: /etc/apt/keyrings/packages.mozilla.org.asc
+
+Types: deb
+URIs: https://packages.mozilla.org/apt
+Suites: thunderbird-deb
+Components: main
+Signed-By: /etc/apt/keyrings/packages.mozilla.org.asc 
 EOF 
 echo 'Configuring APT Pinning...'
 sudo cat <<EOF > /etc/apt/preferences.d/nosnap
 Package: *
-Pin: origin deb.debian.org
-Pin-Priority: 1
-
-Package: *
-Pin: origin security.debian.org
-Pin-Priority: 1
-
-Package: thunderbird
-Pin: release o=LP-PPA-mozillateam
-Pin-Priority: 1000
-
-Package: *
 Pin: origin packages.mozilla.org
 Pin-Priority: 1001
-
-Package: chromium
-Pin: origin security.debian.org
-Pin-Priority: 1000
-
-Package: chromium-common
-Pin: origin security.debian.org
-Pin-Priority: 1000
-
-Package: chromium-sandbox
-Pin: origin security.debian.org
-Pin-Priority: 1000
 
 Package: firefox
 Pin: release o=Ubuntu

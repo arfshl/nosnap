@@ -34,6 +34,10 @@ Pin-Priority: -1
 Package: chromium-browser
 Pin: release o=Ubuntu
 Pin-Priority: -1
+
+Package: snapd
+Pin: release o=Ubuntu
+Pin-Priority: -1
 EOF
 
 echo 'Done'

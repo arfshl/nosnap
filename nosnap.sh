@@ -36,4 +36,8 @@ Pin: release o=Ubuntu
 Pin-Priority: -1
 EOF
 
+echo "Installing flatpak"
+sudo apt install flatpak -y
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
 echo 'Done'

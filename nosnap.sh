@@ -8,16 +8,11 @@ wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /et
 sudo tee /etc/apt/sources.list.d/mozilla.sources > /dev/null << EOF
 Types: deb
 URIs: https://packages.mozilla.org/apt
-Suites: mozilla
+Suites: mozilla thunderbird-deb
 Components: main
 Signed-By: /etc/apt/keyrings/packages.mozilla.org.asc
-
-Types: deb
-URIs: https://packages.mozilla.org/apt
-Suites: thunderbird-deb
-Components: main
-Signed-By: /etc/apt/keyrings/packages.mozilla.org.asc 
 EOF 
+
 echo 'Configuring APT Pinning...'
 sudo cat <<EOF > /etc/apt/preferences.d/nosnap
 Package: *

@@ -1,7 +1,7 @@
 #!/bin/sh
 echo 'Removing ALL snaps'
 sudo snap remove $(snap list | awk '!/^Name|^core|^snapd/ {print $1}') 2>/dev/null || true
-sudo apt purge --autoremove snapd
+sudo apt purge snapd plasma-discover-backend-snap gnome-software-plugin-snap --autoremove -y 
 echo 'Adding Mozilla Firefox and Thunderbird Official Repo...'
 sudo apt install wget -y
 wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null
